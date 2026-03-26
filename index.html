@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyUseHub - Ultra Image Compressor</title>
+<title>EasyUseHub - Pro Image Compressor</title>
 <style>
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:10px; text-align:center; color:#1e293b;}
 .container{max-width:450px; margin:10px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;}
@@ -15,25 +15,23 @@ header img{max-width:150px; margin-bottom:10px;}
 .ad-slot{margin:15px auto; padding:10px; background:#f1f5f9; border:1px dashed #cbd5e1; border-radius:10px; font-size:12px; color:#94a3b8;}
 .description {font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 15px;}
 
-.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition: 0.3s;}
-.upload-area:hover{background:#e0eeff; border-style: solid;}
+.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px;}
+.upload-btn{background:#3b82f6; color:#fff; padding:10px 20px; border-radius:8px; font-weight:bold; display:inline-block; margin-bottom:10px;}
 
 .stats-container {display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; display: none;}
 .stat-box {background: #f8fafc; padding: 10px; border-radius: 10px; border: 1px solid #e2e8f0; font-size: 13px; text-align: left;}
 .stat-box b {display: block; font-size: 11px; color: #64748b; text-transform: uppercase;}
 
-.btn{width:100%; padding:15px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px; transition: 0.3s;}
-.btn:hover{background:#16a34a; transform: translateY(-2px);}
-
+.btn{width:100%; padding:15px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
 select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px solid #e2e8f0; font-size:16px; outline:none;}
 
 #progress-container{display:none; margin:20px 0; text-align:left;}
 .progress-label{font-size:12px; font-weight:bold; color:#3b82f6; margin-bottom:5px; display:block;}
 .progress-bg{width:100%; height:8px; background:#e2e8f0; border-radius:10px; overflow:hidden;}
-.progress-fill{width:0%; height:100%; background:#22c55e; transition: width 0.3s ease; border-radius:10px;}
+.progress-fill{width:0%; height:100%; background:#22c55e; transition: width 0.3s ease;}
 
-#preview img{max-width:140px; border-radius:12px; margin-top:15px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
-.download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:16px;}
+#preview img{max-width:140px; border-radius:12px; margin-top:15px; border:1px solid #ddd;}
+.download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold;}
 .home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold; font-size:14px;}
 </style>
 </head>
@@ -45,12 +43,12 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
     <h1 class="tool-title">Image <span>Compressor</span></h1>
-    <p class="description">Ultra-fast 15MB Image Compression. No Server, Secure & Smooth.</p>
+    <p class="description">Optimized for Large Files (Up to 15MB). Secure & Fast.</p>
     
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
-        <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
+        <span class="upload-btn">Select Photo</span>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
-        <div id="status" style="font-size:13px; color:#64748b;">JPG, PNG, WebP Up to 15MB</div>
+        <div id="status" style="font-size:13px; color:#64748b;">Max 15MB | JPG, PNG, WebP</div>
     </div>
 
     <div id="stats-box" class="stats-container">
@@ -58,7 +56,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
         <div class="stat-box"><b>New Size</b> <span id="newS" style="color:#22c55e; font-weight:bold;">-</span></div>
     </div>
 
-    <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target KB:</label>
+    <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target Size:</label>
     <select id="targetKB">
         <option value="50">50 KB</option>
         <option value="100" selected>100 KB</option>
@@ -67,7 +65,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
         <option value="1024">1 MB</option>
     </select>
 
-    <button id="runBtn" class="btn" style="display:none;" onclick="startCompression()">⚡ Optimize Image</button>
+    <button id="runBtn" class="btn" style="display:none;" onclick="processImage()">⚡ Optimize Image</button>
 
     <div id="progress-container">
         <span class="progress-label" id="p-label">Starting...</span>
@@ -81,16 +79,16 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 <div class="ad-slot">ADVERTISEMENT SLOT (BOTTOM)</div>
 
 <script>
-let selectedImage = null;
+let imgData = null;
 
 document.getElementById('fileInp').onchange = function(e) {
     const file = e.target.files[0];
     if (file) {
         if (file.size > 15 * 1024 * 1024) {
-            alert("Limit exceeded! Max 15MB allowed.");
+            alert("Limit: 15MB. Please choose a smaller file.");
             return;
         }
-        selectedImage = file;
+        imgData = file;
         document.getElementById('status').innerText = file.name;
         document.getElementById('oldS').innerText = (file.size > 1024 * 1024) ? (file.size / (1024 * 1024)).toFixed(2) + " MB" : (file.size / 1024).toFixed(1) + " KB";
         document.getElementById('stats-box').style.display = 'grid';
@@ -100,80 +98,73 @@ document.getElementById('fileInp').onchange = function(e) {
     }
 };
 
-async function startCompression() {
+async function processImage() {
     const targetKB = parseFloat(document.getElementById('targetKB').value);
     const pFill = document.getElementById('p-fill');
     const pLabel = document.getElementById('p-label');
-    const preview = document.getElementById('preview');
     const runBtn = document.getElementById('runBtn');
 
     document.getElementById('progress-container').style.display = 'block';
     runBtn.style.display = 'none';
     
-    updateProgress(20, "Analyzing...");
+    updateP(20, "Analyzing Image...");
 
-    // Memory Safe Image Loading
-    const img = new Image();
-    img.src = URL.createObjectURL(selectedImage);
-    
-    img.onload = async () => {
-        updateProgress(50, "Downsizing...");
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(imgData);
+    reader.onload = function(event) {
+        const blob = new Blob([event.target.result]);
+        const url = URL.createObjectURL(blob);
+        const img = new Image();
+        img.src = url;
 
-        // Smart Scaling Logic to avoid memory spikes
-        let width = img.width;
-        let height = img.height;
-        let maxDim = 1200; 
+        img.onload = async () => {
+            updateP(50, "Downsizing Pixels...");
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-        if (selectedImage.size > 8 * 1024 * 1024) maxDim = 800; // 8MB+ হলে আরও ছোট করবে
-        else if (selectedImage.size > 3 * 1024 * 1024) maxDim = 1000;
-
-        if (width > maxDim || height > maxDim) {
-            const ratio = Math.min(maxDim / width, maxDim / height);
-            width *= ratio; height *= ratio;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-        ctx.drawImage(img, 0, 0, width, height);
-        
-        updateProgress(80, "Compressing...");
-        
-        let finalBlob = null;
-        let quality = 0.7;
-        
-        // Fast Binary Search Jump
-        finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
-        
-        if (finalBlob.size / 1024 > targetKB) {
-            quality = 0.4; // বড় ফাইলের জন্য এক ঝটকায় কোয়ালিটি ড্রপ
-            finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
+            // Hard resolution limit to prevent crash
+            let width = img.width;
+            let height = img.height;
+            let maxDimension = 1000; 
             
-            if (finalBlob.size / 1024 > targetKB) {
-                quality = 0.2; // এক্সট্রিম কন্ডিশন
-                finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
+            if (imgData.size > 5 * 1024 * 1024) maxDimension = 800; // 5MB+ হলে রেজোলিউশন আরও কমাবে
+
+            if (width > maxDimension || height > maxDimension) {
+                const ratio = Math.min(maxDimension / width, maxDimension / height);
+                width = width * ratio;
+                height = height * ratio;
             }
-        }
 
-        updateProgress(100, "Success!");
-
-        const compressedSize = finalBlob.size / 1024;
-        const dispSize = (compressedSize > 1024) ? (compressedSize / 1024).toFixed(2) + " MB" : compressedSize.toFixed(1) + " KB";
-        
-        setTimeout(() => {
-            document.getElementById('newS').innerText = dispSize;
-            const downloadUrl = URL.createObjectURL(finalBlob);
-            preview.innerHTML = `<img src="${downloadUrl}"><a href="${downloadUrl}" download="Compressed_${selectedImage.name}" class="download-btn">Download Now</a>`;
-            document.getElementById('progress-container').style.display = 'none';
-            URL.revokeObjectURL(img.src); // Memory Clear
-        }, 300);
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            updateP(80, "Compressing...");
+            
+            // Single step compression for speed and stability
+            let quality = 0.6;
+            if (imgData.size > 5 * 1024 * 1024) quality = 0.4;
+            
+            canvas.toBlob(async (finalBlob) => {
+                updateP(100, "Success!");
+                
+                const finalSize = finalBlob.size / 1024;
+                document.getElementById('newS').innerText = (finalSize > 1024) ? (finalSize / 1024).toFixed(2) + " MB" : finalSize.toFixed(1) + " KB";
+                
+                const finalUrl = URL.createObjectURL(finalBlob);
+                document.getElementById('preview').innerHTML = `<img src="${finalUrl}"><a href="${finalUrl}" download="EasyUseHub_${imgData.name}" class="download-btn">Download Now</a>`;
+                document.getElementById('progress-container').style.display = 'none';
+                
+                // Cleanup
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', quality);
+        };
     };
 }
 
-function updateProgress(percent, text) {
-    document.getElementById('p-fill').style.width = percent + "%";
-    document.getElementById('p-label').innerText = text + " (" + percent + "%)";
+function updateP(pct, txt) {
+    document.getElementById('p-fill').style.width = pct + "%";
+    document.getElementById('p-label').innerText = txt + " (" + pct + "%)";
 }
 </script>
 </body>
