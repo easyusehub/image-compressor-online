@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Compressor - EasyUseHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* তোর অরিজিনাল ব্লু-গ্রিন প্রফেশনাল থিম */
+body{font-family:'Roboto', sans-serif; margin:0; background:#f4f7f6; color:#1e293b; display: flex; flex-direction: column; min-height: 100vh;}
+header{text-align:center; padding:20px; background:#ffffff; border-bottom: 2px solid #3b82f6;}
+header img{max-width:180px;}
+
+.ad-slot{text-align:center; margin:15px auto; padding:15px; background:#e2e8f0; border-radius:8px; font-size:12px; max-width: 650px; border: 1px dashed #94a3b8; color: #64748b;}
+
+#main-tool{flex: 1; padding: 20px; max-width: 550px; margin: 0 auto; width: 100%; box-sizing: border-box;}
+.tool-card{background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center;}
+.short-info{font-size: 14px; color: #64748b; margin-bottom: 20px;}
+
+.upload-zone{border: 2px dashed #3b82f6; padding: 35px 20px; border-radius: 12px; cursor: pointer; background: #f0f7ff; transition: 0.3s;}
+.upload-zone:hover{background: #e0eeff; border-color: #2563eb;}
+.upload-zone input{display:none;}
+.upload-label{background: #3b82f6; color: #fff; padding: 12px 25px; border-radius: 8px; font-weight: bold; display: inline-block; margin-bottom: 10px;}
+#file-status{font-size: 13px; color: #3b82f6; font-weight: 500;}
+
+.presets{display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0;}
+.presets button{padding: 12px; border: none; border-radius: 8px; background: #3b82f6; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s;}
+.presets button:hover{background: #2563eb;}
+.presets button.dark{background: #1e293b;}
+
+.custom-box{margin-top: 15px;}
+.custom-box input{padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; width: 140px; text-align: center; font-size: 16px; margin-bottom: 10px;}
+.primary-btn{width: 100%; padding: 15px; background: #22c55e; color: #fff; border: none; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; transition: 0.3s;}
+.primary-btn:hover{background: #16a34a; transform: translateY(-2px);}
+
+#loader{margin: 15px 0; font-weight: bold; color: #3b82f6; display: none;}
+#preview-area img{max-width: 100%; border-radius: 10px; margin-top: 15px; border: 1px solid #e2e8f0;}
+.download-btn{display: block; background: #1e293b; color: #fff; text-decoration: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 10px;}
+
+footer{text-align:center; padding:25px; background:#fff; border-top: 1px solid #e2e8f0; margin-top: auto;}
+.home-link{display: inline-block; padding: 12px 30px; background: #3b82f6; color: #fff; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s;}
+.home-link:hover{background: #1d4ed8; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);}
+</style>
+</head>
+<body>
+
+<header>
+    <img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub Logo">
+</header>
+
+<div class="ad-slot">ADVERTISEMENT PLACEHOLDER (TOP)</div>
+
+<div id="main-tool">
+    <div class="tool-card">
+        <p class="short-info">Professional Image Optimization: Secure, Fast & High Quality.</p>
+        
+        <div class="upload-zone" onclick="document.getElementById('fileInp').click()">
+            <span class="upload-label">Choose Image</span>
+            <input type="file" id="fileInp" accept="image/jpeg, image/png, image/webp">
+            <div id="file-status">Select JPG, PNG or WebP (Max 20MB)</div>
+        </div>
+
+        <div class="presets">
+            <button onclick="setTarget(50)">50 KB</button>
+            <button onclick="setTarget(100)">100 KB</button>
+            <button onclick="setTarget(200)">200 KB</button>
+            <button onclick="setTarget(500)">500 KB</button>
+            <button onclick="setTarget(1024)">1 MB</button>
+            <button class="dark" onclick="setTarget(2048)">2 MB</button>
+        </div>
+
+        <div class="custom-box">
+            <input type="number" id="targetKB" placeholder="Target Size (KB)">
+            <button class="primary-btn" onclick="startCompression()">Compress & Download</button>
+        </div>
+
+        <div id="loader">⚡ Optimizing...</div>
+        <div id="preview-area"></div>
+    </div>
+</div>
+
+<div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
+
+<footer>
+    <a href="https://easyusehub.blogspot.com" class="home-link">🏠 Back to Home</a>
+    <p style="font-size: 11px; color: #94a3b8; margin-top: 15px;">© 2026 EasyUseHub | All-in-One Professional Tools</p>
+</footer>
+
+<script>
+const fileInp = document.getElementById('fileInp');
+const fileStatus = document.getElementById('file-status');
+const loader = document.getElementById('loader');
+const previewArea = document.getElementById('preview-area');
+
+fileInp.onchange = () => {
+    if(fileInp.files.length > 0) {
+        const file = fileInp.files[0];
+        fileStatus.innerText = `Selected: ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+        previewArea.innerHTML = '';
+    }
+};
+
+function setTarget(kb) { document.getElementById('targetKB').value = kb; }
+
+async function startCompression() {
+    const file = fileInp.files[0];
+    const targetKB = parseFloat(document.getElementById('targetKB').value);
+
+    if(!file || !targetKB) { alert("Please select an image and enter target size!"); return; }
+    
+    loader.style.display = 'block';
+    previewArea.innerHTML = '';
+
+    const img = new Image();
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+        img.src = e.target.result;
+        img.onload = async () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width = img.width;
+            let height = img.height;
+
+            // প্রফেশনাল রেজোলিউশন স্কেলিং (ফোনের বড় ছবির জন্য বেস্ট সলিউশন)
+            const maxDimension = 1600; 
+            if (width > maxDimension || height > maxDimension) {
+                const scale = Math.min(maxDimension / width, maxDimension / height);
+                width *= scale; height *= scale;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+
+            let mimeType = file.type === "image/png" ? "image/png" : "image/jpeg";
+            
+            // স্মার্ট বাইনারি সার্চ অ্যালগরিদম (মাত্র ৬-৭ ধাপে পারফেক্ট সাইজ বের করবে)
+            let low = 0.01, high = 0.95, bestBlob = null;
+            for(let i=0; i<8; i++) {
+                const mid = (low + high) / 2;
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, mimeType, mid));
+                if (!blob) break;
+                if (blob.size / 1024 > targetKB) {
+                    high = mid;
+                } else {
+                    low = mid;
+                    bestBlob = blob;
+                    if (targetKB - (blob.size / 1024) < 5) break; 
+                }
+            }
+
+            if(!bestBlob) bestBlob = await new Promise(resolve => canvas.toBlob(resolve, mimeType, 0.1));
+
+            const resultUrl = URL.createObjectURL(bestBlob);
+            loader.style.display = 'none';
+            previewArea.innerHTML = `
+                <div style="font-weight:bold; color:#22c55e; margin-bottom:10px;">✅ Success! Size: ${(bestBlob.size/1024).toFixed(1)} KB</div>
+                <img src="${resultUrl}">
+                <a href="${resultUrl}" download="EasyUseHub_${file.name}" class="download-btn">Download Compressed Image</a>
+            `;
+        };
+    };
+    reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
