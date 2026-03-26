@@ -3,116 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyUseHub - Turbo Image Compressor</title>
+<title>Pro Image Compressor - EasyUseHub</title>
 <style>
-body{font-family:sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b;}
-.container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
-header img{max-width:150px; margin-bottom:15px;}
-.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px;}
-.btn{width:100%; padding:15px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
-select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px solid #e2e8f0; font-size:16px;}
-#loader{display:none; color:#3b82f6; font-weight:bold; margin:20px 0;}
-#preview img{max-width:100%; border-radius:12px; margin-top:20px; border:1px solid #ddd;}
-.download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold;}
-.home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold;}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:10px; text-align:center; color:#1e293b;}
+.container{max-width:480px; margin:15px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border:1px solid #e2e8f0;}
+header img{max-width:160px; margin-bottom:10px;}
+
+/* Ad Slots */
+.ad-slot{margin:15px auto; padding:10px; background:#f1f5f9; border:1px dashed #cbd5e1; max-width:600px; border-radius:10px; font-size:12px; color:#94a3b8;}
+
+.description{font-size:13px; color:#64748b; line-height:1.5; margin-bottom:20px; padding:0 10px;}
+
+.upload-area{border:2px dashed #3b82f6; padding:35px 15px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px;}
+.upload-btn{background:#3b82f6; color:#fff; padding:10px 20px; border-radius:8px; font-weight:bold; display:inline-block; margin-bottom:10px;}
+
+.stats-grid{display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom:15px; text-align:left; display:none;}
+.stat-box{background:#f8fafc; padding:10px; border-radius:10px; border:1px solid #e2e8f0; font-size:13px; font-weight:bold;}
+
+select{width:100%; padding:14px; margin:10px 0; border-radius:12px; border:2px solid #e2e8f0; font-size:16px; outline:none; cursor:pointer;}
+
+/* Progress Bar */
+#progress-container{display:none; margin:20px 0; text-align:left;}
+.progress-label{font-size:12px; font-weight:bold; color:#3b82f6; margin-bottom:5px; display:block;}
+.progress-bg{width:100%; height:8px; background:#e2e8f0; border-radius:10px; overflow:hidden;}
+.progress-fill{width:0%; height:100%; background:#22c55e; transition: width 0.3s; border-radius:10px;}
+
+.main-btn{width:100%; padding:16px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; display:none;}
+#preview img{max-width:120px; border-radius:10px; margin-top:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); border:1px solid #ddd;}
+.download-btn{display:block; margin-top:12px; background:#1e293b; color:#fff; padding:15px; border-radius:12px; text-decoration:none; font-weight:bold;}
+.home-link{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold; font-size:14px;}
 </style>
 </head>
 <body>
 
+<div class="ad-slot">Advertisement Slot (Top)</div>
+
 <div class="container">
-    <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="Logo"></header>
+    <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
-    <div class="upload-area" onclick="document.getElementById('fileInp').click()">
-        <strong>Click to Select Image</strong>
-        <input type="file" id="fileInp" accept="image/*" style="display:none">
-        <div id="status" style="margin-top:10px; font-size:13px; color:#3b82f6;">Select any image (Max 1MB)</div>
+    <div class="description">
+        Compress your images effortlessly! Select your target size (40KB - 500KB) and our smart engine will optimize your photo while maintaining clear quality.
     </div>
 
-    <label style="display:block; text-align:left; font-weight:bold; font-size:14px;">Target Size:</label>
+    <div class="upload-area" onclick="document.getElementById('fileInp').click()">
+        <span class="upload-btn">Upload Photo</span>
+        <input type="file" id="fileInp" accept="image/*" style="display:none">
+        <div id="status" style="font-size:13px; color:#64748b;">JPG, PNG, WebP supported</div>
+    </div>
+
+    <div id="stats" class="stats-grid">
+        <div class="stat-box">Original: <span id="oldS" style="color:#ef4444;">0</span> KB</div>
+        <div class="stat-box">Compressed: <span id="newS" style="color:#22c55e;">Wait...</span></div>
+    </div>
+
+    <label style="display:block; text-align:left; font-size:13px; font-weight:bold; color:#475569;">Select Target KB:</label>
     <select id="targetKB">
         <option value="40">Under 40 KB</option>
-        <option value="100">Under 100 KB</option>
+        <option value="100" selected>Under 100 KB</option>
         <option value="200">Under 200 KB</option>
         <option value="500">Under 500 KB</option>
     </select>
 
-    <button id="runBtn" class="btn" style="display:none;" onclick="compressImage()">⚡ Compress & Download</button>
-    <div id="loader">🚀 Processing... Please Wait</div>
+    <button id="runBtn" class="main-btn" onclick="startProcess()">⚡ Start Compression</button>
+
+    <div id="progress-container">
+        <span class="progress-label" id="p-label">Analyzing: 0%</span>
+        <div class="progress-bg"><div id="p-fill" class="progress-fill"></div></div>
+    </div>
+
     <div id="preview"></div>
 
-    <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Home</a>
+    <a href="https://easyusehub.blogspot.com" class="home-link">🏠 Go back to Home</a>
 </div>
 
+<div class="ad-slot">Advertisement Slot (Bottom)</div>
+
 <script>
-let selectedFile = null;
+let currentImgFile = null;
 
 document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
-        selectedFile = this.files[0];
-        document.getElementById('status').innerText = "Selected: " + selectedFile.name;
+        currentImgFile = this.files[0];
+        document.getElementById('status').innerText = currentImgFile.name;
+        document.getElementById('oldS').innerText = (currentImgFile.size / 1024).toFixed(1);
+        document.getElementById('stats').style.display = 'grid';
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
+        document.getElementById('newS').innerText = "Ready";
     }
 };
 
-async function compressImage() {
-    const loader = document.getElementById('loader');
-    const runBtn = document.getElementById('runBtn');
+async function startProcess() {
+    const targetLimit = parseFloat(document.getElementById('targetKB').value);
+    const pFill = document.getElementById('p-fill');
+    const pLabel = document.getElementById('p-label');
+    const pBox = document.getElementById('progress-container');
     const preview = document.getElementById('preview');
-    const targetKB = parseFloat(document.getElementById('targetKB').value);
 
-    loader.style.display = 'block';
-    runBtn.style.display = 'none';
+    pBox.style.display = 'block';
+    document.getElementById('runBtn').style.display = 'none';
+    
+    updateP(30, "Optimizing Pixels...");
 
     const img = new Image();
-    img.src = URL.createObjectURL(selectedFile);
+    img.src = URL.createObjectURL(currentImgFile);
 
     img.onload = async () => {
+        updateP(60, "Squeezing to KB...");
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
-        // Initial Resolution Reduction
         let width = img.width;
         let height = img.height;
-        const maxDim = 800; // রেজোলিউশন লিমিট কমিয়ে দিলাম যাতে ব্রাউজার ক্রাশ না করে
-        if (width > maxDim || height > maxDim) {
-            const ratio = Math.min(maxDim / width, maxDim / height);
-            width *= ratio;
-            height *= ratio;
+        const maxLimit = 850; 
+        if (width > maxLimit || height > maxLimit) {
+            const ratio = Math.min(maxLimit / width, maxLimit / height);
+            width *= ratio; height *= ratio;
         }
 
         canvas.width = width;
         canvas.height = height;
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Binary Search Quality Compression
-        let minQ = 0.1, maxQ = 0.9, bestBlob = null;
-        
-        for(let i=0; i<6; i++) { // ৬ বার লুপ চালিয়ে সবথেকে কাছের সাইজ বের করবে
-            let midQ = (minQ + maxQ) / 2;
-            const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', midQ));
-            
-            if (blob.size / 1024 <= targetKB) {
-                bestBlob = blob;
-                minQ = midQ; // সাইজ ছোট হলে কোয়ালিটি একটু বাড়ানোর চেষ্টা করবে
-            } else {
-                maxQ = midQ; // সাইজ বড় হলে কোয়ালিটি আরও কমাবে
-            }
+        let q = 0.8;
+        let finalBlob = null;
+
+        // Binary Loop
+        for(let i=0; i<6; i++) {
+            finalBlob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', q));
+            if (finalBlob.size / 1024 <= targetLimit) break;
+            q -= 0.15;
+            if (q < 0.1) q = 0.1;
         }
 
-        // যদি লুপে রেজাল্ট না আসে, তবে একদম মিনিমাম কোয়ালিটি দিবে
-        if(!bestBlob) {
-            bestBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.1));
-        }
+        updateP(100, "Done! Ready to Save.");
+        document.getElementById('newS').innerText = (finalBlob.size / 1024).toFixed(1) + " KB";
 
-        const url = URL.createObjectURL(bestBlob);
-        loader.style.display = 'none';
-        preview.innerHTML = `
-            <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(bestBlob.size/1024).toFixed(1)} KB</div>
-            <img src="${url}">
-            <a href="${url}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Now</a>
-        `;
+        setTimeout(() => {
+            const url = URL.createObjectURL(finalBlob);
+            preview.innerHTML = `
+                <img src="${url}">
+                <a href="${url}" download="EasyUseHub_${currentImgFile.name}" class="download-btn">Download Compressed Photo</a>
+            `;
+            pBox.style.display = 'none';
+        }, 500);
     };
+}
+
+function updateP(pct, txt) {
+    document.getElementById('p-fill').style.width = pct + "%";
+    document.getElementById('p-label').innerText = txt + " (" + pct + "%)";
 }
 </script>
 </body>
