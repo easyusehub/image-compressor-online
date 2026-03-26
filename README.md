@@ -1,6 +1,6 @@
 # 🖼️ Image Compressor by EasyUseHub
 
-A powerful, ultra-fast, and secure online image compression tool designed for web developers, bloggers, and everyday users. This tool allows users to reduce image file sizes (JPG, PNG, WebP) to specific targets like 50KB, 100KB, or 3MB with a single click.
+A powerful, ultra-fast, and secure online image compression tool designed for web developers, bloggers, and everyday users. This tool allows users to reduce image file sizes (JPG, PNG, WebP) to specific targets like 50KB, 100KB, or 1MB with a single click.
 
 ### ✨ Key Features:
 - **Binary Search Optimization:** Extremely fast compression logic that finds the perfect size in milliseconds.
