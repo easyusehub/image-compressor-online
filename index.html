@@ -3,167 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyUseHub - Fast Image Compressor</title>
+<title>EasyUseHub - Turbo Image Compressor</title>
 <style>
-/* তোর থিম: ব্লু, গ্রিন ও হোয়াইট */
-body{font-family: 'Segoe UI', Arial, sans-serif; background:#f4f7f9; margin:0; padding:0; color:#1e293b; text-align:center;}
-header{background:#fff; padding:15px; border-bottom:2px solid #3b82f6; display:flex; justify-content:center; align-items:center; position:relative;}
-header img{max-width:140px;}
-.home-btn{position:absolute; left:15px; background:#3b82f6; color:#fff; text-decoration:none; padding:8px 15px; border-radius:8px; font-weight:bold; font-size:14px;}
-
-.ad-box{margin:15px auto; padding:10px; background:#e5e7eb; border:1px dashed #9ca3af; max-width:600px; border-radius:8px; font-size:11px; color:#6b7280;}
-.container{max-width:420px; margin:20px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08);}
-
-.upload-area{border:2px dashed #3b82f6; padding:30px 10px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition:0.3s;}
-.upload-area:hover{background:#e0eeff;}
-.upload-label{background:#3b82f6; color:#fff; padding:10px 20px; border-radius:8px; font-weight:bold; display:inline-block; margin-bottom:10px;}
-
-.control-group{margin-bottom:20px; text-align:left;}
-.control-group label{display:block; font-size:14px; font-weight:bold; margin-bottom:8px;}
-select{width:100%; padding:12px; border:2px solid #e2e8f0; border-radius:10px; font-size:16px; cursor:pointer;}
-
-.stats{background:#f8fafc; padding:15px; border-radius:12px; margin-bottom:15px; display:none; text-align:left; border:1px solid #e2e8f0; font-size:14px;}
-.stats b{color:#3b82f6;}
-
-.main-btn{width:100%; padding:16px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; display:none;}
-.main-btn:hover{background:#16a34a; transform:translateY(-2px);}
-
-#loading{display:none; margin:15px 0; font-weight:bold; color:#3b82f6;}
-#result-area img{max-width:180px; border-radius:10px; margin-top:20px; border:1px solid #ddd; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+body{font-family:sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b;}
+.container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+header img{max-width:150px; margin-bottom:15px;}
+.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px;}
+.btn{width:100%; padding:15px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px;}
+select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px solid #e2e8f0; font-size:16px;}
+#loader{display:none; color:#3b82f6; font-weight:bold; margin:20px 0;}
+#preview img{max-width:100%; border-radius:12px; margin-top:20px; border:1px solid #ddd;}
 .download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold;}
-
-footer{padding:30px; background:#fff; border-top:1px solid #e2e8f0; margin-top:40px;}
-.footer-link{display:inline-block; padding:12px 30px; background:#3b82f6; color:#fff; text-decoration:none; border-radius:30px; font-weight:bold;}
+.home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold;}
 </style>
 </head>
 <body>
 
-<header>
-    <a href="https://easyusehub.blogspot.com" class="home-btn">Home</a>
-    <img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub Logo">
-</header>
-
-<div class="ad-box">AD SLOT 1 (TOP)</div>
-
 <div class="container">
-    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-        <span class="upload-label">Select Photo</span>
-        <input type="file" id="fileInput" accept="image/*" style="display:none">
-        <div id="status-text">Limit: 1MB | Target: 40KB-1MB</div>
-    </div>
-
-    <div class="control-group">
-        <label>Set Target Size:</label>
-        <select id="sizeTarget">
-            <option value="40">Under 40 KB</option>
-            <option value="100" selected>Under 100 KB</option>
-            <option value="200">Under 200 KB</option>
-            <option value="500">Under 500 KB</option>
-            <option value="1000">Under 1 MB</option>
-        </select>
-    </div>
-
-    <div id="info-box" class="stats">
-        <div>Original: <b id="oldSize">0</b> KB</div>
-        <div>Target: <b>Under <span id="targetLabel">100</span> KB</b></div>
-    </div>
-
-    <button id="goBtn" class="main-btn" onclick="startCompress()">⚡ Compress Now</button>
+    <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="Logo"></header>
     
-    <div id="loading">Processing Image...</div>
-    <div id="result-area"></div>
+    <div class="upload-area" onclick="document.getElementById('fileInp').click()">
+        <strong>Click to Select Image</strong>
+        <input type="file" id="fileInp" accept="image/*" style="display:none">
+        <div id="status" style="margin-top:10px; font-size:13px; color:#3b82f6;">Select any image (Max 1MB)</div>
+    </div>
+
+    <label style="display:block; text-align:left; font-weight:bold; font-size:14px;">Target Size:</label>
+    <select id="targetKB">
+        <option value="40">Under 40 KB</option>
+        <option value="100">Under 100 KB</option>
+        <option value="200">Under 200 KB</option>
+        <option value="500">Under 500 KB</option>
+    </select>
+
+    <button id="runBtn" class="btn" style="display:none;" onclick="compressImage()">⚡ Compress & Download</button>
+    <div id="loader">🚀 Processing... Please Wait</div>
+    <div id="preview"></div>
+
+    <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Home</a>
 </div>
 
-<div class="ad-box">AD SLOT 2 (BOTTOM)</div>
-
-<footer>
-    <a href="https://easyusehub.blogspot.com" class="footer-link">🏠 Landing Page</a>
-    <p style="font-size:11px; color:#94a3b8; margin-top:15px;">&copy; 2026 EasyUseHub | Optimized Engine</p>
-</footer>
-
 <script>
-let fileData = null;
+let selectedFile = null;
 
-document.getElementById('fileInput').onchange = function(e) {
+document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
-        fileData = this.files[0];
-        // 1MB Limit
-        if(fileData.size > 1024 * 1024) {
-            alert("File size is too big! Please select under 1MB.");
-            this.value = "";
-            return;
-        }
-        document.getElementById('status-text').innerText = "File: " + fileData.name;
-        document.getElementById('oldSize').innerText = (fileData.size / 1024).toFixed(1);
-        document.getElementById('info-box').style.display = 'block';
-        document.getElementById('goBtn').style.display = 'block';
-        document.getElementById('result-area').innerHTML = '';
+        selectedFile = this.files[0];
+        document.getElementById('status').innerText = "Selected: " + selectedFile.name;
+        document.getElementById('runBtn').style.display = 'block';
+        document.getElementById('preview').innerHTML = '';
     }
 };
 
-document.getElementById('sizeTarget').onchange = function() {
-    document.getElementById('targetLabel').innerText = this.value;
-};
-
-function startCompress() {
-    if(!fileData) return;
-
-    const loader = document.getElementById('loading');
-    const result = document.getElementById('result-area');
-    const targetKB = parseFloat(document.getElementById('sizeTarget').value);
+async function compressImage() {
+    const loader = document.getElementById('loader');
+    const runBtn = document.getElementById('runBtn');
+    const preview = document.getElementById('preview');
+    const targetKB = parseFloat(document.getElementById('targetKB').value);
 
     loader.style.display = 'block';
-    document.getElementById('goBtn').style.display = 'none';
-    result.innerHTML = '';
+    runBtn.style.display = 'none';
 
-    const reader = new FileReader();
-    reader.readAsDataURL(fileData);
-    
-    reader.onload = function(event) {
-        const img = new Image();
-        img.src = event.target.result;
+    const img = new Image();
+    img.src = URL.createObjectURL(selectedFile);
+
+    img.onload = async () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Initial Resolution Reduction
+        let width = img.width;
+        let height = img.height;
+        const maxDim = 800; // রেজোলিউশন লিমিট কমিয়ে দিলাম যাতে ব্রাউজার ক্রাশ না করে
+        if (width > maxDim || height > maxDim) {
+            const ratio = Math.min(maxDim / width, maxDim / height);
+            width *= ratio;
+            height *= ratio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Binary Search Quality Compression
+        let minQ = 0.1, maxQ = 0.9, bestBlob = null;
         
-        img.onload = async function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            let width = img.width;
-            let height = img.height;
+        for(let i=0; i<6; i++) { // ৬ বার লুপ চালিয়ে সবথেকে কাছের সাইজ বের করবে
+            let midQ = (minQ + maxQ) / 2;
+            const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', midQ));
             
-            // রেজোলিউশন আগে থেকেই কিছুটা কমিয়ে আনা যাতে কাজ দ্রুত হয়
-            let maxDim = targetKB < 100 ? 700 : 1200;
-            if(width > maxDim || height > maxDim) {
-                let ratio = Math.min(maxDim / width, maxDim / height);
-                width *= ratio; height *= ratio;
+            if (blob.size / 1024 <= targetKB) {
+                bestBlob = blob;
+                minQ = midQ; // সাইজ ছোট হলে কোয়ালিটি একটু বাড়ানোর চেষ্টা করবে
+            } else {
+                maxQ = midQ; // সাইজ বড় হলে কোয়ালিটি আরও কমাবে
             }
+        }
 
-            let quality = 0.8;
-            let finalBlob = null;
+        // যদি লুপে রেজাল্ট না আসে, তবে একদম মিনিমাম কোয়ালিটি দিবে
+        if(!bestBlob) {
+            bestBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.1));
+        }
 
-            // সিম্পল লুপ: টার্গেট না আসা পর্যন্ত ৫ বার চেক করবে
-            for(let i=0; i<8; i++) {
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
-                
-                if(finalBlob.size / 1024 <= targetKB) break;
-                
-                quality -= 0.15;
-                width *= 0.85;
-                height *= 0.85;
-            }
-
-            const downloadUrl = URL.createObjectURL(finalBlob);
-            loader.style.display = 'none';
-            result.innerHTML = `
-                <div style="font-weight:bold; color:#22c55e; margin-bottom:10px;">✅ Success: ${(finalBlob.size/1024).toFixed(1)} KB</div>
-                <img src="${downloadUrl}">
-                <a href="${downloadUrl}" download="EasyUseHub_${fileData.name}" class="download-btn">Download Now</a>
-            `;
-            document.getElementById('fileInput').value = ""; 
-        };
+        const url = URL.createObjectURL(bestBlob);
+        loader.style.display = 'none';
+        preview.innerHTML = `
+            <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(bestBlob.size/1024).toFixed(1)} KB</div>
+            <img src="${url}">
+            <a href="${url}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Now</a>
+        `;
     };
 }
 </script>
