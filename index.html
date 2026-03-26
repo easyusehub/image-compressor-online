@@ -5,20 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EasyUseHub - Smart Image Compressor</title>
 <style>
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:10px; text-align:center; color:#1e293b;}
-.container{max-width:450px; margin:15px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b;}
+.container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
 header img{max-width:150px; margin-bottom:15px;}
-
-/* Title & Description */
-.tool-title {font-size: 24px; font-weight: 800; color: #1e293b; margin: 5px 0;}
-.tool-title span {color: #3b82f6;}
-.tool-desc {font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4;}
-
-/* Ad Placeholders */
-.ad-slot {background: #f1f5f9; border: 1px dashed #cbd5e1; padding: 10px; margin: 10px auto; border-radius: 10px; font-size: 11px; color: #94a3b8; max-width: 450px;}
-
-/* Original Size Display */
-#orig-info {margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #ef4444; display: none; background: #fef2f2; padding: 8px; border-radius: 8px;}
 
 .upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition: 0.3s;}
 .upload-area:hover{background:#e0eeff; border-style: solid;}
@@ -28,16 +17,28 @@ header img{max-width:150px; margin-bottom:15px;}
 
 select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px solid #e2e8f0; font-size:16px; outline:none;}
 
+/* Progress Bar Style */
 #progress-container{display:none; margin:20px 0; text-align:left;}
 .progress-label{font-size:13px; font-weight:bold; color:#3b82f6; margin-bottom:5px; display:block;}
 .progress-bg{width:100%; height:10px; background:#e2e8f0; border-radius:10px; overflow:hidden;}
 .progress-fill{width:0%; height:100%; background:#22c55e; transition: width 0.3s ease; border-radius:10px;}
 
-#preview img{max-width:110px; border-radius:12px; margin-top:20px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+#preview img{max-width:100px; border-radius:12px; margin-top:20px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
 .download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:16px;}
 .home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold; font-size:14px;}
+/* Title & Description Design */
+.tool-title {font-size: 24px; font-weight: 800; color: #1e293b; margin: 5px 0;}
+.tool-title span {color: #3b82f6;}
+.tool-desc {font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4;}
+
+/* Ad Placeholders Design */
+.ad-slot {background: #f1f5f9; border: 1px dashed #cbd5e1; padding: 10px; margin: 10px auto; border-radius: 10px; font-size: 11px; color: #94a3b8; max-width: 450px;}
+
+/* Original Size Display Design */
+#orig-info {margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #ef4444; display: none; background: #fef2f2; padding: 8px; border-radius: 8px;}
 </style>
 </head>
+<body>
 <body>
 
 <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (TOP)</div>
@@ -46,10 +47,19 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
     <h1 class="tool-title">Image <span>Compressor</span></h1>
-    <p class="tool-desc">Quickly compress your images up to 15MB. Best for web and mobile use.</p>
+    <p class="tool-desc">Fast and secure image optimization. Reduce file size without losing quality.</p>
 
-    <div id="orig-info">Original Size: <span id="oldSizeVal">0</span></div>
+    <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
 
+    <div class="upload-area" onclick="document.getElementById('fileInp').click()">
+        ```
+
+*(তোর ফাইলের একদম নিচে গিয়ে `</div>` এর পরে দ্বিতীয় অ্যাড বসিয়ে দিবি):*
+```html
+</div> <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
+<div class="container">
+    <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
+    
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
         <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
@@ -62,7 +72,6 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
         <option value="100" selected>Under 100 KB (Recommended)</option>
         <option value="200">Under 200 KB</option>
         <option value="500">Under 500 KB</option>
-        <option value="1024">Under 1 MB</option>
     </select>
 
     <button id="runBtn" class="btn" style="display:none;" onclick="startCompression()">⚡ Optimize Image</button>
@@ -77,21 +86,12 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Landing Page</a>
 </div>
 
-<div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
-
 <script>
 let selectedImage = null;
 
 document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
         selectedImage = this.files[0];
-        
-        // Show Original Size (Adding this logic carefully)
-        let sizeKb = (selectedImage.size / 1024).toFixed(1);
-        // MB তে হলে MB দেখাবে, না হলে KB
-        document.getElementById('oldSizeVal').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB";
-        document.getElementById('orig-info').style.display = 'block';
-
         document.getElementById('status').innerText = "Selected: " + selectedImage.name;
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
@@ -100,7 +100,6 @@ document.getElementById('fileInp').onchange = function(e) {
 };
 
 async function startCompression() {
-    // --- EXACTLY YOUR ORIGINAL LOGIC START ---
     const targetKB = parseFloat(document.getElementById('targetKB').value);
     const pContainer = document.getElementById('progress-container');
     const pFill = document.getElementById('p-fill');
@@ -158,11 +157,8 @@ async function startCompression() {
                 <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Optimized Photo</a>
             `;
             pContainer.style.display = 'none';
-            // তোর লজিক শেষ হওয়ার পর মেমোরি ক্লিন
-            URL.revokeObjectURL(img.src);
         }, 500);
     };
-    // --- EXACTLY YOUR ORIGINAL LOGIC END ---
 }
 
 function updateProgress(percent, text) {
