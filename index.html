@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyUseHub - Smart Image Compressor</title>
+<title>EasyUseHub - Image Compressor Online</title>
 <style>
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b;}
 .container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
@@ -69,7 +69,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 
     <div id="preview"></div>
 
-    <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Landing Page</a>
+    <a href="https://easyusehub.blogspot.com/p/image-compressor.html" class="home-btn">🏠 BACK TO HOME</a>
 </div>
 </div> <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
 <script>
@@ -140,7 +140,7 @@ async function startCompression() {
             preview.innerHTML = `
                 <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(finalBlob.size/1024).toFixed(1)} KB</div>
                 <img src="${downloadUrl}">
-                <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Optimized Photo</a>
+                <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Compress Photo</a>
             `;
             pContainer.style.display = 'none';
         }, 500);
