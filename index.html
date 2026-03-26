@@ -39,39 +39,25 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 </style>
 </head>
 <body>
-<body>
-
 <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (TOP)</div>
-
 <div class="container">
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
-    
     <h1 class="tool-title">Image <span>Compressor</span></h1>
     <p class="tool-desc">Fast and secure image optimization. Reduce file size without losing quality.</p>
-
-    <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
-
-    <div class="upload-area" onclick="document.getElementById('fileInp').click()">
-        ```
-
-*(তোর ফাইলের একদম নিচে গিয়ে `</div>` এর পরে দ্বিতীয় অ্যাড বসিয়ে দিবি):*
-```html
-</div> <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
-<div class="container">
-    <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
-    
+   <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
         <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
-        <div id="status" style="font-size:13px; color:#64748b;">Max Size: 1MB | JPG, PNG, WebP</div>
+        <div id="status" style="font-size:13px; color:#64748b;">Max Size: 15MB | JPG, PNG, WebP</div>
     </div>
 
     <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target Size:</label>
     <select id="targetKB">
-        <option value="40">Under 40 KB (Extreme)</option>
+        <option value="50">Under 50 KB (Extreme)</option>
         <option value="100" selected>Under 100 KB (Recommended)</option>
         <option value="200">Under 200 KB</option>
         <option value="500">Under 500 KB</option>
+        <option value="1MB">Under  1MB</option>
     </select>
 
     <button id="runBtn" class="btn" style="display:none;" onclick="startCompression()">⚡ Optimize Image</button>
@@ -85,18 +71,19 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 
     <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Landing Page</a>
 </div>
-
+</div> <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
 <script>
 let selectedImage = null;
 
 document.getElementById('fileInp').onchange = function(e) {
-    if(this.files.length > 0) {
+    if(this.files.length > 0) let sizeKb = (selectedImage.size / 1024).toFixed(1);
+        document.getElementById('origSizeVal').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB"; {
         selectedImage = this.files[0];
         document.getElementById('status').innerText = "Selected: " + selectedImage.name;
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
         document.getElementById('progress-container').style.display = 'none';
-    }
+  document.getElementById('status').innerText = "Selected: " + selectedImage.name;  }
 };
 
 async function startCompression() {
