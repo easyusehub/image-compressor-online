@@ -6,7 +6,7 @@
 <title>EasyUseHub - Smart Image Compressor</title>
 <style>
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:10px; text-align:center; color:#1e293b;}
-.container{max-width:450px; margin:10px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
+.container{max-width:450px; margin:15px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
 header img{max-width:150px; margin-bottom:15px;}
 
 /* Title & Description */
@@ -33,7 +33,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 .progress-bg{width:100%; height:10px; background:#e2e8f0; border-radius:10px; overflow:hidden;}
 .progress-fill{width:0%; height:100%; background:#22c55e; transition: width 0.3s ease; border-radius:10px;}
 
-#preview img{max-width:100px; border-radius:12px; margin-top:20px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+#preview img{max-width:110px; border-radius:12px; margin-top:20px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
 .download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:16px;}
 .home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold; font-size:14px;}
 </style>
@@ -46,14 +46,14 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
     <h1 class="tool-title">Image <span>Compressor</span></h1>
-    <p class="tool-desc">Fast and secure image optimization. Reduce file size without losing quality.</p>
+    <p class="tool-desc">Quickly compress your images up to 15MB. Best for web and mobile use.</p>
 
-    <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
+    <div id="orig-info">Original Size: <span id="oldSizeVal">0</span></div>
 
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
         <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
-        <div id="status" style="font-size:13px; color:#64748b;">Max Size: 15MB | JPG, PNG, WebP</div>
+        <div id="status" style="font-size:13px; color:#64748b;">Max Size: 1MB | JPG, PNG, WebP</div>
     </div>
 
     <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target Size:</label>
@@ -84,20 +84,12 @@ let selectedImage = null;
 
 document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
-        let file = this.files[0];
+        selectedImage = this.files[0];
         
-        // 15MB Limit Check
-        if (file.size > 15 * 1024 * 1024) {
-            alert("File is too large! Please select an image under 15MB.");
-            this.value = "";
-            return;
-        }
-
-        selectedImage = file;
-
-        // Display Original Size
+        // Show Original Size (Adding this logic carefully)
         let sizeKb = (selectedImage.size / 1024).toFixed(1);
-        document.getElementById('origSizeVal').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB";
+        // MB তে হলে MB দেখাবে, না হলে KB
+        document.getElementById('oldSizeVal').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB";
         document.getElementById('orig-info').style.display = 'block';
 
         document.getElementById('status').innerText = "Selected: " + selectedImage.name;
@@ -120,6 +112,7 @@ async function startCompression() {
     runBtn.style.display = 'none';
     preview.innerHTML = '';
     
+    // Animation Progress (Fake 0-40% to show start)
     updateProgress(30, "Analyzing Image...");
 
     const img = new Image();
@@ -162,9 +155,11 @@ async function startCompression() {
             preview.innerHTML = `
                 <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(finalBlob.size/1024).toFixed(1)} KB</div>
                 <img src="${downloadUrl}">
-                <a href="${downloadUrl}" download="EasyUseHub_${selectedImage.name}" class="download-btn">Download Optimized Photo</a>
+                <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Optimized Photo</a>
             `;
             pContainer.style.display = 'none';
+            // তোর লজিক শেষ হওয়ার পর মেমোরি ক্লিন
+            URL.revokeObjectURL(img.src);
         }, 500);
     };
     // --- EXACTLY YOUR ORIGINAL LOGIC END ---
