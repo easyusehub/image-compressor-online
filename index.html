@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EasyUseHub - Turbo Image Compressor</title>
+<title>EasyUseHub - Ultra Image Compressor</title>
 <style>
 body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:10px; text-align:center; color:#1e293b;}
 .container{max-width:450px; margin:10px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;}
@@ -45,12 +45,12 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
     <h1 class="tool-title">Image <span>Compressor</span></h1>
-    <p class="description">Compress images up to 15MB instantly. High-speed browser optimization.</p>
+    <p class="description">Ultra-fast 15MB Image Compression. No Server, Secure & Smooth.</p>
     
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
         <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
-        <div id="status" style="font-size:13px; color:#64748b;">Max 15MB | JPG, PNG, WebP</div>
+        <div id="status" style="font-size:13px; color:#64748b;">JPG, PNG, WebP Up to 15MB</div>
     </div>
 
     <div id="stats-box" class="stats-container">
@@ -58,19 +58,19 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
         <div class="stat-box"><b>New Size</b> <span id="newS" style="color:#22c55e; font-weight:bold;">-</span></div>
     </div>
 
-    <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target Size:</label>
+    <label style="display:block; text-align:left; font-weight:bold; font-size:14px; color:#475569;">Target KB:</label>
     <select id="targetKB">
-        <option value="40">Under 40 KB</option>
-        <option value="100" selected>Under 100 KB</option>
-        <option value="200">Under 200 KB</option>
-        <option value="500">Under 500 KB</option>
-        <option value="1024">Under 1 MB</option>
+        <option value="50">50 KB</option>
+        <option value="100" selected>100 KB</option>
+        <option value="200">200 KB</option>
+        <option value="500">500 KB</option>
+        <option value="1024">1 MB</option>
     </select>
 
     <button id="runBtn" class="btn" style="display:none;" onclick="startCompression()">⚡ Optimize Image</button>
 
     <div id="progress-container">
-        <span class="progress-label" id="p-label">Processing: 0%</span>
+        <span class="progress-label" id="p-label">Starting...</span>
         <div class="progress-bg"><div id="p-fill" class="progress-fill"></div></div>
     </div>
 
@@ -84,16 +84,15 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 let selectedImage = null;
 
 document.getElementById('fileInp').onchange = function(e) {
-    if(this.files.length > 0) {
-        selectedImage = this.files[0];
-        // ১৫ এমবি চেক
-        if (selectedImage.size > 15 * 1024 * 1024) {
-            alert("File is too large! Please select under 15MB.");
+    const file = e.target.files[0];
+    if (file) {
+        if (file.size > 15 * 1024 * 1024) {
+            alert("Limit exceeded! Max 15MB allowed.");
             return;
         }
-        document.getElementById('status').innerText = selectedImage.name;
-        let sizeDisp = (selectedImage.size / 1024 > 1024) ? (selectedImage.size / (1024 * 1024)).toFixed(2) + " MB" : (selectedImage.size / 1024).toFixed(1) + " KB";
-        document.getElementById('oldS').innerText = sizeDisp;
+        selectedImage = file;
+        document.getElementById('status').innerText = file.name;
+        document.getElementById('oldS').innerText = (file.size > 1024 * 1024) ? (file.size / (1024 * 1024)).toFixed(2) + " MB" : (file.size / 1024).toFixed(1) + " KB";
         document.getElementById('stats-box').style.display = 'grid';
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
@@ -111,58 +110,64 @@ async function startCompression() {
     document.getElementById('progress-container').style.display = 'block';
     runBtn.style.display = 'none';
     
-    updateProgress(20, "Analyzing File...");
+    updateProgress(20, "Analyzing...");
 
-    const reader = new FileReader();
-    reader.readAsDataURL(selectedImage);
-    reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = async () => {
-            updateProgress(50, "Downscaling Pixels...");
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+    // Memory Safe Image Loading
+    const img = new Image();
+    img.src = URL.createObjectURL(selectedImage);
+    
+    img.onload = async () => {
+        updateProgress(50, "Downsizing...");
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
 
-            let width = img.width;
-            let height = img.height;
-            
-            // ১৫ এমবি পর্যন্ত ফাইলের জন্য সেফ লিমিট
-            let maxDim = 1200; 
-            if (selectedImage.size > 5 * 1024 * 1024) maxDim = 800; // ৫ এমবির বেশি হলে রেজোলিউশন আরও কমাবে ক্রাশ এড়াতে
+        // Smart Scaling Logic to avoid memory spikes
+        let width = img.width;
+        let height = img.height;
+        let maxDim = 1200; 
 
-            if (width > maxDim || height > maxDim) {
-                const ratio = Math.min(maxDim / width, maxDim / height);
-                width *= ratio; height *= ratio;
-            }
+        if (selectedImage.size > 8 * 1024 * 1024) maxDim = 800; // 8MB+ হলে আরও ছোট করবে
+        else if (selectedImage.size > 3 * 1024 * 1024) maxDim = 1000;
 
-            canvas.width = width;
-            canvas.height = height;
-            ctx.drawImage(img, 0, 0, width, height);
+        if (width > maxDim || height > maxDim) {
+            const ratio = Math.min(maxDim / width, maxDim / height);
+            width *= ratio; height *= ratio;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        updateProgress(80, "Compressing...");
+        
+        let finalBlob = null;
+        let quality = 0.7;
+        
+        // Fast Binary Search Jump
+        finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
+        
+        if (finalBlob.size / 1024 > targetKB) {
+            quality = 0.4; // বড় ফাইলের জন্য এক ঝটকায় কোয়ালিটি ড্রপ
+            finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
             
-            updateProgress(80, "Optimizing KB...");
-            
-            let finalBlob = null;
-            let q = 0.7;
-            
-            // Quick 2-step logic for 15MB compatibility
-            finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', q));
             if (finalBlob.size / 1024 > targetKB) {
-                q = 0.3;
-                finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', q));
+                quality = 0.2; // এক্সট্রিম কন্ডিশন
+                finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
             }
+        }
 
-            updateProgress(100, "Compression Complete!");
+        updateProgress(100, "Success!");
 
-            setTimeout(() => {
-                const compressedKB = finalBlob.size / 1024;
-                let newDisp = (compressedKB > 1024) ? (compressedKB / 1024).toFixed(2) + " MB" : compressedKB.toFixed(1) + " KB";
-                document.getElementById('newS').innerText = newDisp;
-                
-                const downloadUrl = URL.createObjectURL(finalBlob);
-                preview.innerHTML = `<img src="${downloadUrl}"><a href="${downloadUrl}" download="EasyUseHub_Comp.jpg" class="download-btn">Download Now</a>`;
-                document.getElementById('progress-container').style.display = 'none';
-            }, 400);
-        };
+        const compressedSize = finalBlob.size / 1024;
+        const dispSize = (compressedSize > 1024) ? (compressedSize / 1024).toFixed(2) + " MB" : compressedSize.toFixed(1) + " KB";
+        
+        setTimeout(() => {
+            document.getElementById('newS').innerText = dispSize;
+            const downloadUrl = URL.createObjectURL(finalBlob);
+            preview.innerHTML = `<img src="${downloadUrl}"><a href="${downloadUrl}" download="Compressed_${selectedImage.name}" class="download-btn">Download Now</a>`;
+            document.getElementById('progress-container').style.display = 'none';
+            URL.revokeObjectURL(img.src); // Memory Clear
+        }, 300);
     };
 }
 
