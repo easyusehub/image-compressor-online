@@ -16,5 +16,4 @@ A powerful, ultra-fast, and secure online image compression tool designed for we
 - **Canvas API** (For high-quality image manipulation)
 
 ---
-🔗 **Main Website:** [EasyUseHub Blogger](https://easyusehub.blogspot.com)
-🚀 **Live Tool:** [EasyUseHub GitHub Pages](https://easyusehub.github.io)
+🔗 **Main Website:** https://easyusehub.blogspot.com/p/image-compressor.html
