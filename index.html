@@ -76,14 +76,13 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 let selectedImage = null;
 
 document.getElementById('fileInp').onchange = function(e) {
-    if(this.files.length > 0) let sizeKb = (selectedImage.size / 1024).toFixed(1);
-        document.getElementById('origSizeVal').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB"; {
+    if(this.files.length > 0) {
         selectedImage = this.files[0];
         document.getElementById('status').innerText = "Selected: " + selectedImage.name;
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
         document.getElementById('progress-container').style.display = 'none';
-  document.getElementById('status').innerText = "Selected: " + selectedImage.name;  }
+   }
 };
 
 async function startCompression() {
