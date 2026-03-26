@@ -9,19 +9,17 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4
 .container{max-width:450px; margin:15px auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
 header img{max-width:150px; margin-bottom:15px;}
 
-/* Title & Description */
+/* Title & Ads */
 .tool-title {font-size: 24px; font-weight: 800; color: #1e293b; margin: 5px 0;}
 .tool-title span {color: #3b82f6;}
 .tool-desc {font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4;}
-
-/* Ad Slots */
 .ad-slot{background:#f1f5f9; border:1px dashed #cbd5e1; padding:10px; margin:10px auto; border-radius:10px; font-size:11px; color:#94a3b8;}
-
-.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition: 0.3s;}
-.upload-area:hover{background:#e0eeff; border-style: solid;}
 
 /* Original Size Display */
 #orig-info {margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #ef4444; display: none; background: #fef2f2; padding: 8px; border-radius: 8px;}
+
+.upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition: 0.3s;}
+.upload-area:hover{background:#e0eeff; border-style: solid;}
 
 .btn{width:100%; padding:15px; background:#22c55e; color:#fff; border:none; border-radius:12px; font-size:18px; font-weight:bold; cursor:pointer; margin-top:10px; transition: 0.3s;}
 .btn:hover{background:#16a34a; transform: translateY(-2px);}
@@ -40,13 +38,13 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 </head>
 <body>
 
-<div class="ad-slot">ADVERTISEMENT SLOT (TOP)</div>
+<div class="ad-slot">AD PLACEHOLDER (TOP)</div>
 
 <div class="container">
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     
     <h1 class="tool-title">Image <span>Compressor</span></h1>
-    <p class="tool-desc">Compress images instantly up to 15MB. Best for web and mobile use.</p>
+    <p class="tool-desc">Compress images instantly up to 15MB. Fast, secure, and easy to use.</p>
 
     <div id="orig-info">Original Size: <span id="oldSizeTxt">0</span></div>
 
@@ -77,7 +75,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <a href="https://easyusehub.blogspot.com" class="home-btn">🏠 Back to Landing Page</a>
 </div>
 
-<div class="ad-slot">ADVERTISEMENT SLOT (BOTTOM)</div>
+<div class="ad-slot">AD PLACEHOLDER (BOTTOM)</div>
 
 <script>
 let selectedImage = null;
@@ -86,7 +84,7 @@ document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
         let file = this.files[0];
         
-        // 15MB Limit
+        // 15MB Limit Check
         if (file.size > 15 * 1024 * 1024) {
             alert("File is too large! Please select under 15MB.");
             return;
@@ -94,7 +92,7 @@ document.getElementById('fileInp').onchange = function(e) {
 
         selectedImage = file;
         
-        // Show Original Size
+        // Original Size Text
         let sizeKb = (selectedImage.size / 1024).toFixed(1);
         document.getElementById('oldSizeTxt').innerText = sizeKb > 1024 ? (sizeKb / 1024).toFixed(2) + " MB" : sizeKb + " KB";
         document.getElementById('orig-info').style.display = 'block';
@@ -107,6 +105,7 @@ document.getElementById('fileInp').onchange = function(e) {
 };
 
 async function startCompression() {
+    // --- EXACTLY YOUR ORIGINAL LOGIC START ---
     const targetKB = parseFloat(document.getElementById('targetKB').value);
     const pContainer = document.getElementById('progress-container');
     const pFill = document.getElementById('p-fill');
@@ -145,7 +144,6 @@ async function startCompression() {
         let quality = 0.8;
         let finalBlob = null;
 
-        // তোর সেই ১০০% ওয়ার্কিং লজিক
         for(let i=0; i<5; i++) {
             finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
             if (finalBlob.size / 1024 <= targetKB) break;
@@ -160,12 +158,13 @@ async function startCompression() {
             preview.innerHTML = `
                 <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(finalBlob.size/1024).toFixed(1)} KB</div>
                 <img src="${downloadUrl}">
-                <a href="${downloadUrl}" download="Optimized_${selectedImage.name}" class="download-btn">Download Optimized Photo</a>
+                <a href="${downloadUrl}" download="EasyUseHub_${selectedImage.name}" class="download-btn">Download Optimized Photo</a>
             `;
             pContainer.style.display = 'none';
-            URL.revokeObjectURL(img.src); 
+            URL.revokeObjectURL(img.src);
         }, 500);
     };
+    // --- EXACTLY YOUR ORIGINAL LOGIC END ---
 }
 
 function updateProgress(percent, text) {
