@@ -3,137 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auto Pro Image Compressor - EasyUseHub</title>
+<title>Pro Image Compressor - EasyUseHub</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* তোর অরিজিনাল ব্লু-গ্রিন প্রফেশনাল থিম */
 body{font-family:'Roboto',sans-serif;margin:0;background:#f8fafc;color:#1e293b;display:flex;flex-direction:column;min-height:100vh}
 header{text-align:center;padding:15px;background:#fff;border-bottom:2px solid #3b82f6}
-header img{max-width:180px}
-.ad-slot{text-align:center;margin:10px auto;padding:12px;background:#f1f5f9;border-radius:8px;font-size:11px;max-width:600px;color:#94a3b8;border:1px dashed #cbd5e1}
-#main-tool{flex:1;padding:15px;max-width:450px;margin:0 auto;width:100%;box-sizing:border-box}
-.tool-card{background:#fff;padding:30px;border-radius:25px;box-shadow:0 15px 35px rgba(0,0,0,0.07);text-align:center}
-
-.upload-zone{border:2px dashed #3b82f6;padding:40px 15px;border-radius:20px;cursor:pointer;background:#f0f7ff;transition:0.3s;margin-bottom:20px}
-.upload-zone:hover{background:#e0eeff;border-style:solid}
+header img{max-width:160px}
+#main-tool{flex:1;padding:15px;max-width:480px;margin:0 auto;width:100%;box-sizing:border-box}
+.tool-card{background:#fff;padding:25px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center}
+.upload-zone{border:2px dashed #3b82f6;padding:35px 15px;border-radius:15px;cursor:pointer;background:#f0f7ff;margin-bottom:20px}
 .upload-zone input{display:none}
-.upload-label{background:#3b82f6;color:#fff;padding:12px 30px;border-radius:12px;font-weight:700;display:inline-block;margin-bottom:12px;font-size:15px}
-#file-status{font-size:13px;color:#334155;font-weight:500}
-
-.short-desc{font-size:13px;color:#64748b;margin-bottom:25px;line-height:1.5}
-
-.primary-btn{width:100%;padding:16px;background:#22c55e;color:#fff;border:none;border-radius:15px;font-size:18px;font-weight:700;cursor:pointer;transition:0.3s;display:none}
-.primary-btn:hover{background:#16a34a;box-shadow:0 8px 20px rgba(34,197,94,0.3);transform:translateY(-2px)}
-
-#loader{margin:20px 0;font-weight:700;color:#3b82f6;display:none}
-#preview-area img{max-width:100%;border-radius:15px;margin-top:20px;border:1px solid #e2e8f0;box-shadow: 0 4px 15px rgba(0,0,0,0.05)}
-.download-btn{display:block;background:#1e293b;color:#fff;text-decoration:none;padding:16px;border-radius:12px;font-weight:700;margin-top:12px;text-align:center;font-size:16px}
-
+.upload-label{background:#3b82f6;color:#fff;padding:12px 25px;border-radius:10px;font-weight:700;display:inline-block;margin-bottom:10px}
+.size-info{background:#f1f5f9; padding:15px; border-radius:12px; margin-bottom:15px; display:none; text-align:left; font-size:14px;}
+.size-info div{margin:5px 0; font-weight:bold;}
+.primary-btn{width:100%;padding:16px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-size:18px;font-weight:700;cursor:pointer;display:none}
+#loader{margin:15px 0;font-weight:700;color:#3b82f6;display:none}
+#preview-area img{max-width:100%;border-radius:12px;margin-top:20px;border:1px solid #e2e8f0}
+.download-btn{display:block;background:#1e293b;color:#fff;text-decoration:none;padding:15px;border-radius:12px;font-weight:700;margin-top:10px;text-align:center}
 footer{text-align:center;padding:25px;background:#fff;border-top:1px solid #e2e8f0;margin-top:auto}
-.home-link{display:inline-block;padding:12px 35px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:30px;font-weight:700;font-size:14px;box-shadow: 0 4px 10px rgba(59,130,246,0.2)}
+.home-link{display:inline-block;padding:12px 30px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:30px;font-weight:700}
 </style>
 </head>
 <body>
 
 <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub Logo"></header>
-<div class="ad-slot">AD SLOT (TOP)</div>
 
 <div id="main-tool">
     <div class="tool-card">
-        <p class="short-desc">Automatically optimize and compress your images while maintaining the best visual quality.</p>
-        
         <div class="upload-zone" onclick="document.getElementById('fileInp').click()">
-            <span class="upload-label">Upload Photo</span>
+            <span class="upload-label">Select Photo</span>
             <input type="file" id="fileInp" accept="image/*">
-            <div id="file-status">Select any JPG, PNG or WebP</div>
+            <div id="file-status">Click to upload image</div>
         </div>
 
-        <button id="mainBtn" class="primary-btn" onclick="autoOptimize()">⚡ Optimize Now</button>
+        <div id="infoBox" class="size-info">
+            <div style="color:#64748b;">Original: <span id="oldSize">0 KB</span></div>
+            <div style="color:#22c55e;">Optimized: <span id="newSize">Processing...</span></div>
+        </div>
 
-        <div id="loader">Processing your image...</div>
+        <button id="mainBtn" class="primary-btn" onclick="startOptimizing()">⚡ Compress Now</button>
+        <div id="loader">Processing... Please Wait</div>
         <div id="preview-area"></div>
     </div>
 </div>
 
-<div class="ad-slot">AD SLOT (BOTTOM)</div>
-
 <footer>
-    <a href="https://easyusehub.blogspot.com" class="home-link">🏠 Back to EasyUseHub</a>
-    <p style="font-size:11px;color:#94a3b8;margin-top:15px">&copy; 2026 EasyUseHub | Powered by AI-Logic Engine</p>
+    <a href="https://easyusehub.blogspot.com" class="home-link">🏠 Back to Home</a>
 </footer>
 
 <script>
-let activeFile = null;
+let imgFile = null;
 
 document.getElementById('fileInp').onchange = function(e) {
     if(this.files.length > 0) {
-        activeFile = this.files[0];
-        document.getElementById('file-status').innerText = "Ready: " + activeFile.name;
-        document.getElementById('mainBtn').style.display = 'block'; // ফাইল দিলে বাটন আসবে
+        imgFile = this.files[0];
+        document.getElementById('file-status').innerText = imgFile.name;
+        document.getElementById('oldSize').innerText = (imgFile.size / 1024).toFixed(1) + " KB";
+        document.getElementById('infoBox').style.display = 'block';
+        document.getElementById('mainBtn').style.display = 'block';
         document.getElementById('preview-area').innerHTML = '';
+        document.getElementById('newSize').innerText = "Waiting...";
     }
 };
 
-async function autoOptimize() {
-    if(!activeFile) return;
-    
+async function startOptimizing() {
+    if(!imgFile) return;
     const loader = document.getElementById('loader');
     const preview = document.getElementById('preview-area');
-    const btn = document.getElementById('mainBtn');
-
+    const newSizeTxt = document.getElementById('newSize');
+    
     loader.style.display = 'block';
-    btn.style.display = 'none';
     preview.innerHTML = '';
+    newSizeTxt.innerText = "Squeezing...";
 
     const img = new Image();
     const reader = new FileReader();
     
-    reader.onload = (event) => {
-        img.src = event.target.result;
-        img.onload = () => {
+    reader.onload = (e) => {
+        img.src = e.target.result;
+        img.onload = async () => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            // --- AI AUTO LOGIC ---
+            // --- FORCE COMPRESSION LOGIC ---
             let width = img.width;
             let height = img.height;
-            let fileSizeKB = activeFile.size / 1024;
-            
-            // ১. অটো রেজোলিউশন লিমিট (Smooth চলার জন্য সবথেকে জরুরি)
-            let maxDimension = 1600; 
-            if (width > maxDimension || height > maxDimension) {
-                const ratio = Math.min(maxDimension / width, maxDimension / height);
-                width *= ratio;
-                height *= ratio;
+            let quality = 0.6; // Start quality
+
+            // 1. Jodi chobi beshi boro hoy (1200px limit)
+            if (width > 1200 || height > 1200) {
+                const ratio = Math.min(1200 / width, 1200 / height);
+                width *= ratio; height *= ratio;
             }
 
-            // ২. অটো কোয়ালিটি লজিক (ফাইলের সাইজ অনুযায়ী)
-            let quality = 0.7; // Standard
-            if(fileSizeKB > 5000) quality = 0.5; // ৫MB এর উপরে হলে কোয়ালিটি আরও কমাবে
-            if(fileSizeKB > 10000) quality = 0.3; // ১০MB এর উপরে হলে আরও কমাবে
-
-            canvas.width = width;
-            canvas.height = height;
-            ctx.drawImage(img, 0, 0, width, height);
-
-            let type = activeFile.type === "image/png" ? "image/png" : "image/jpeg";
-            
-            canvas.toBlob((blob) => {
-                // ৩. নেগেটিভ চেক (যদি সাইজ বেড়ে যায় তবে অরিজিনাল ইউজ করবে)
-                const finalBlob = (blob.size > activeFile.size && activeFile.size > 51200) ? activeFile : blob;
+            // 2. Jodi size na kome, tobe width/height aro komabe (Looping)
+            let finalBlob = null;
+            for (let i = 0; i < 3; i++) {
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
                 
-                const url = URL.createObjectURL(finalBlob);
-                loader.style.display = 'none';
-                preview.innerHTML = `
-                    <div style="color:#22c55e; font-weight:bold; margin-bottom:12px;">✅ Optimized: ${(finalBlob.size/1024).toFixed(1)} KB</div>
-                    <img src="${url}">
-                    <a href="${url}" download="Optimized_${activeFile.name}" class="download-btn">Download Now</a>
-                `;
-                document.getElementById('fileInp').value = ""; 
-            }, type, quality);
+                finalBlob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', quality));
+                
+                // Jodi size original er theke 20% kom hoy, tobe theme jabe
+                if (finalBlob.size < imgFile.size * 0.8) break; 
+                
+                // Noile aro komabe
+                width *= 0.8; height *= 0.8; quality -= 0.1;
+            }
+
+            const url = URL.createObjectURL(finalBlob);
+            loader.style.display = 'none';
+            newSizeTxt.innerText = (finalBlob.size / 1024).toFixed(1) + " KB";
+            
+            preview.innerHTML = `
+                <img src="${url}">
+                <a href="${url}" download="Compressed_${imgFile.name}" class="download-btn">Download Image</a>
+            `;
+            document.getElementById('fileInp').value = ""; 
         };
     };
-    reader.readAsDataURL(activeFile);
+    reader.readAsDataURL(imgFile);
 }
 </script>
 </body>
