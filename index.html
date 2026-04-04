@@ -9,6 +9,48 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4
 .container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
 header img{max-width:150px; margin-bottom:15px;}
 
+/* Custom Ad Bridge Style (Protect PDF টুলের মতো) */
+.custom-ad-bridge {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: white;
+    padding: 20px;
+    margin: 15px auto;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    transition: transform 0.2s;
+    text-align: center;
+    max-width: 450px;
+}
+.custom-ad-bridge:hover { transform: scale(1.02); }
+.ad-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; display: block; }
+.ad-desc { font-size: 12px; color: rgba(255, 255, 255, 0.9); margin-bottom: 10px; display: block; line-height: 1.4; }
+.ad-btn { background: #fbbf24; color: #000; padding: 6px 15px; border-radius: 5px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-top: 5px; font-size: 12px; }
+
+/* Push Ad Style */
+#push-notification {
+    position: fixed;
+    bottom: -150px; 
+    right: 20px;
+    width: 280px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    z-index: 10000;
+    transition: bottom 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    cursor: pointer;
+    border-left: 5px solid #2563eb;
+}
+#push-notification.active { bottom: 20px; }
+#push-notification img { width: 45px; height: 45px; border-radius: 8px; margin-right: 12px; }
+.push-text { text-align: left; flex: 1; }
+.push-text b { font-size: 13px; color: #222; display: block; }
+.push-text p { font-size: 11px; color: #666; margin: 3px 0 0 0; }
+.close-push { position: absolute; top: 5px; right: 8px; font-size: 18px; color: #aaa; cursor: pointer; }
+
 .upload-area{border:2px dashed #3b82f6; padding:30px; border-radius:15px; cursor:pointer; background:#f0f7ff; margin-bottom:20px; transition: 0.3s;}
 .upload-area:hover{background:#e0eeff; border-style: solid;}
 
@@ -28,33 +70,23 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 .tool-title {font-size: 24px; font-weight: 800; color: #1e293b; margin: 5px 0;}
 .tool-title span {color: #3b82f6;}
 .tool-desc {font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4;}
-
-/* Delete PDF Tool-এর মতো Ad Bridge Style */
-.custom-ad-bridge { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 25px; margin: 15px auto; border-radius: 12px; cursor: pointer; text-align: center; max-width: 450px; }
-.ad-btn { background: #fbbf24; color: #000; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 14px; }
-
-/* In-Page Push Ad */
-#push-notification { position: fixed; bottom: -150px; right: 20px; width: 280px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; align-items: center; padding: 12px; z-index: 10000; transition: bottom 0.5s ease; cursor: pointer; border-left: 6px solid #2563eb; }
-#push-notification.active { bottom: 20px; }
-#push-notification img { width: 50px; height: 50px; border-radius: 5px; margin-right: 12px; }
-.close-push { position: absolute; top: 5px; right: 8px; color: #aaa; cursor: pointer; font-size: 18px; }
-
 #orig-info {margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #ef4444; display: none; background: #fef2f2; padding: 8px; border-radius: 8px;}
 </style>
 </head>
 <body>
 
 <div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
-    <span class="close-push" onclick="event.stopPropagation(); this.parentElement.classList.remove('active');">&times;</span>
+    <span class="close-push" onclick="event.stopPropagation(); document.getElementById('push-notification').classList.remove('active');">&times;</span>
     <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon">
-    <div style="text-align:left; font-size:13px;">
-        <b style="color:#222;">🚀 46+ Pro Tools Ready!</b>
-        <p style="margin:4px 0; color:#666;">EasyUseHub Free Tools.</p>
+    <div class="push-text">
+        <b>🚀 46+ Pro Tools Ready!</b>
+        <p>ALL PDF TOOLS, Calculators & AI tools at EasyUseHub.</p>
     </div>
 </div>
 
 <div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
-    <b style="font-size:18px;">🚀 Try 46+ Premium Free Web Tools!</b><br>
+    <span class="ad-title">🚀 Try 46+ Premium Free Web Tools!</span>
+    <span class="ad-desc">All PDF TOOLS, 16+ calculator, Age Calculator, BMI Tracker, Loan EMI etc - 100% Free</span>
     <div class="ad-btn">Open EasyUseHub</div>
 </div>
 
@@ -63,9 +95,10 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
     <h1 class="tool-title">Image <span>Compressor</span></h1>
     <p class="tool-desc">Fast and secure image optimization. Reduce file size without losing quality.</p>
     
-    <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981); padding: 15px;" onclick="window.open('https://easyusehub.blogspot.com/p/image-compressor.html', '_blank')">
-        <b style="font-size:16px;">⚡ High-Speed Image Compressor</b><br>
-        <small>100% Free at EasyUseHub</small>
+    <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981); padding: 15px;" onclick="window.open('https://easyusehub.blogspot.com/p/free-pdf-tools-online.html', '_blank')">
+        <span class="ad-title" style="font-size:16px;">⚡ Best Online PDF Tools</span>
+        <span class="ad-desc">Merge, Split & Convert PDF Free at EasyUseHub</span>
+        <div class="ad-btn" style="background: #fff; color: #059669;">Try Now</div>
     </div>
 
     <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
@@ -97,8 +130,9 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 </div>
 
 <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
-    <b style="font-size:18px;">🔢 Visit Calculators Hub</b><br>
-    <div class="ad-btn" style="background:#000; color:#fff;">Visit Now</div>
+    <span class="ad-title">🔢 Smart Financial Calculators</span>
+    <span class="ad-desc">Loan EMI, Age Calculator, and BMI Tracker at your fingertips.</span>
+    <div class="ad-btn" style="background: #000; color: #fff;">Open Calculators</div>
 </div>
 
 <script>
@@ -112,6 +146,7 @@ document.getElementById('fileInp').onchange = function(e) {
         document.getElementById('preview').innerHTML = '';
         document.getElementById('progress-container').style.display = 'none';
         
+        // ফাইল সিলেক্ট করলে পুশ অ্যাড একটিভ হবে
         setTimeout(() => { document.getElementById('push-notification').classList.add('active'); }, 1500);
    }
 };
