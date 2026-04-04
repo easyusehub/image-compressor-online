@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EasyUseHub - Image Compressor Online</title>
 <style>
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b;}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#f4f7f6; margin:0; padding:20px; text-align:center; color:#1e293b; position: relative; overflow-x: hidden;}
 .container{max-width:450px; margin:0 auto; background:#fff; padding:25px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.1);}
 header img{max-width:150px; margin-bottom:15px;}
 
@@ -17,7 +17,6 @@ header img{max-width:150px; margin-bottom:15px;}
 
 select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px solid #e2e8f0; font-size:16px; outline:none;}
 
-/* Progress Bar Style */
 #progress-container{display:none; margin:20px 0; text-align:left;}
 .progress-label{font-size:13px; font-weight:bold; color:#3b82f6; margin-bottom:5px; display:block;}
 .progress-bg{width:100%; height:10px; background:#e2e8f0; border-radius:10px; overflow:hidden;}
@@ -26,25 +25,50 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 #preview img{max-width:100px; border-radius:12px; margin-top:20px; border:1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
 .download-btn{display:block; margin-top:15px; background:#1e293b; color:#fff; padding:15px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:16px;}
 .home-btn{display:inline-block; margin-top:20px; color:#3b82f6; text-decoration:none; font-weight:bold; font-size:14px;}
-/* Title & Description Design */
 .tool-title {font-size: 24px; font-weight: 800; color: #1e293b; margin: 5px 0;}
 .tool-title span {color: #3b82f6;}
 .tool-desc {font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4;}
 
-/* Ad Placeholders Design */
-.ad-slot {background: #f1f5f9; border: 1px dashed #cbd5e1; padding: 10px; margin: 10px auto; border-radius: 10px; font-size: 11px; color: #94a3b8; max-width: 450px;}
+/* Delete PDF Tool-এর মতো Ad Bridge Style */
+.custom-ad-bridge { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; padding: 25px; margin: 15px auto; border-radius: 12px; cursor: pointer; text-align: center; max-width: 450px; }
+.ad-btn { background: #fbbf24; color: #000; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 14px; }
 
-/* Original Size Display Design */
+/* In-Page Push Ad */
+#push-notification { position: fixed; bottom: -150px; right: 20px; width: 280px; background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; align-items: center; padding: 12px; z-index: 10000; transition: bottom 0.5s ease; cursor: pointer; border-left: 6px solid #2563eb; }
+#push-notification.active { bottom: 20px; }
+#push-notification img { width: 50px; height: 50px; border-radius: 5px; margin-right: 12px; }
+.close-push { position: absolute; top: 5px; right: 8px; color: #aaa; cursor: pointer; font-size: 18px; }
+
 #orig-info {margin-bottom: 15px; font-size: 14px; font-weight: bold; color: #ef4444; display: none; background: #fef2f2; padding: 8px; border-radius: 8px;}
 </style>
 </head>
 <body>
-<div class="ad-slot">ADVERTISEMENT PLACEHOLDER (TOP)</div>
+
+<div id="push-notification" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
+    <span class="close-push" onclick="event.stopPropagation(); this.parentElement.classList.remove('active');">&times;</span>
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="icon">
+    <div style="text-align:left; font-size:13px;">
+        <b style="color:#222;">🚀 46+ Pro Tools Ready!</b>
+        <p style="margin:4px 0; color:#666;">EasyUseHub Free Tools.</p>
+    </div>
+</div>
+
+<div class="custom-ad-bridge" onclick="window.open('https://easyusehub.blogspot.com', '_blank')">
+    <b style="font-size:18px;">🚀 Try 46+ Premium Free Web Tools!</b><br>
+    <div class="ad-btn">Open EasyUseHub</div>
+</div>
+
 <div class="container">
     <header><img src="https://i.ibb.co.com/21CVbgH5/1000036310-removebg-preview-1.png" alt="EasyUseHub"></header>
     <h1 class="tool-title">Image <span>Compressor</span></h1>
     <p class="tool-desc">Fast and secure image optimization. Reduce file size without losing quality.</p>
-   <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
+    
+    <div class="custom-ad-bridge" style="background: linear-gradient(135deg, #059669, #10b981); padding: 15px;" onclick="window.open('https://easyusehub.blogspot.com/p/image-compressor.html', '_blank')">
+        <b style="font-size:16px;">⚡ High-Speed Image Compressor</b><br>
+        <small>100% Free at EasyUseHub</small>
+    </div>
+
+    <div id="orig-info">Original Size: <span id="origSizeVal">0</span></div>
     <div class="upload-area" onclick="document.getElementById('fileInp').click()">
         <div style="background:#3b82f6; color:#fff; padding:10px; border-radius:8px; display:inline-block; font-weight:bold; margin-bottom:10px;">Select Photo</div>
         <input type="file" id="fileInp" accept="image/*" style="display:none">
@@ -57,7 +81,7 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
         <option value="100" selected>Under 100 KB (Recommended)</option>
         <option value="200">Under 200 KB</option>
         <option value="500">Under 500 KB</option>
-        <option value="1MB">Under  1MB</option>
+        <option value="1MB">Under 1MB</option>
     </select>
 
     <button id="runBtn" class="btn" style="display:none;" onclick="startCompression()">⚡ Optimize Image</button>
@@ -71,7 +95,12 @@ select{width:100%; padding:12px; margin:10px 0; border-radius:10px; border:2px s
 
     <a href="https://easyusehub.blogspot.com/p/image-compressor.html" class="home-btn">🏠 BACK TO HOME</a>
 </div>
-</div> <div class="ad-slot">ADVERTISEMENT PLACEHOLDER (BOTTOM)</div>
+
+<div class="custom-ad-bridge" style="background: linear-gradient(135deg, #f59e0b, #d97706);" onclick="window.open('https://easyusehub.blogspot.com/p/ultimate-calculators-hub.html', '_blank')">
+    <b style="font-size:18px;">🔢 Visit Calculators Hub</b><br>
+    <div class="ad-btn" style="background:#000; color:#fff;">Visit Now</div>
+</div>
+
 <script>
 let selectedImage = null;
 
@@ -82,6 +111,8 @@ document.getElementById('fileInp').onchange = function(e) {
         document.getElementById('runBtn').style.display = 'block';
         document.getElementById('preview').innerHTML = '';
         document.getElementById('progress-container').style.display = 'none';
+        
+        setTimeout(() => { document.getElementById('push-notification').classList.add('active'); }, 1500);
    }
 };
 
@@ -97,7 +128,6 @@ async function startCompression() {
     runBtn.style.display = 'none';
     preview.innerHTML = '';
     
-    // Animation Progress (Fake 0-40% to show start)
     updateProgress(30, "Analyzing Image...");
 
     const img = new Image();
@@ -124,8 +154,6 @@ async function startCompression() {
         
         let quality = 0.8;
         let finalBlob = null;
-
-        // Smart Logic Loop
         for(let i=0; i<5; i++) {
             finalBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
             if (finalBlob.size / 1024 <= targetKB) break;
@@ -140,7 +168,7 @@ async function startCompression() {
             preview.innerHTML = `
                 <div style="font-weight:bold; color:#22c55e; margin:10px 0;">New Size: ${(finalBlob.size/1024).toFixed(1)} KB</div>
                 <img src="${downloadUrl}">
-                <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Compress Photo</a>
+                <a href="${downloadUrl}" download="EasyUseHub_Compressed.jpg" class="download-btn">Download Compressed Photo</a>
             `;
             pContainer.style.display = 'none';
         }, 500);
